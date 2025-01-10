@@ -1,101 +1,130 @@
-import Image from "next/image";
-
+"use client";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Autoplay } from "swiper/modules";
+interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+interface Genre {
+  id: number;
+  name: string;
+}
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+  const [genres, setGenre] = useState<Genre[]>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.themoviedb.org/3/movie/popular",
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTc0YjY4ZWM3MjBhYWU3ZjRmODNmYzc4MTExZDUzOCIsIm5iZiI6MTY4OTMzNjg1OS4zNCwic3ViIjoiNjRiMTNjMWIyY2RlOTgwMGFlY2E5ODk1Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.HSpGpteNgP78oaY4oVDqB1QHY2wGHxOyA6b0PJi24Mk",
+            },
+          }
+        );
+        setPopularMovies(response.data.results);
+      } catch (error) {
+        alert(error);
+      }
+    };
+
+    const fetchGenres = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.themoviedb.org/3/genre/movie/list",
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTc0YjY4ZWM3MjBhYWU3ZjRmODNmYzc4MTExZDUzOCIsIm5iZiI6MTY4OTMzNjg1OS4zNCwic3ViIjoiNjRiMTNjMWIyY2RlOTgwMGFlY2E5ODk1Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.HSpGpteNgP78oaY4oVDqB1QHY2wGHxOyA6b0PJi24Mk",
+            },
+          }
+        );
+
+        setGenre(response.data.genres);
+      } catch (error) {
+        alert(error);
+      }
+    };
+    fetchData();
+    fetchGenres();
+  }, []);
+  return (
+    <div className="">
+      <Swiper
+         modules={[Autoplay]}
+         autoplay={{
+           delay: 5000, 
+           disableOnInteraction: false, 
+         }}
+         loop={true}
+      className="w-full h-screen ">
+        <div className="w-full h-1/4 absolute bottom-0 z-20 bg-gradient-to-t from-primary to-transparent"></div>
+        {popularMovies.map((item, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/original/${item.backdrop_path})`,
+              }}
+              className="h-screen bg-cover bg-center flex items-center relative justify-start "
+            >
+              <div className="relative z-10 container">
+                <h3 className="text-4xl font-semibold">
+                  {item.original_title}
+                </h3>
+                <p className="max-w-4xl">{item.overview}</p>
+              </div>
+              <div className="absolute h-3/4 bottom-0  bg-gradient-to-t from-primary to-transparent w-full"></div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <section className="container">
+        <Swiper
+        modules={[Autoplay]}
+          slidesPerView={4}
+          autoplay={{
+            delay: 3000, 
+            disableOnInteraction: false, 
+          }}
+          spaceBetween={16}
+          navigation
+          pagination={{ clickable: true }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          {genres.map((genre) => (
+            <SwiperSlide key={genre.id} className="">
+              <div
+                className="p-4 border rounded-md flex items-end justify-center aspect-video border-white"
+                key={genre.id}
+              >
+                {genre.name}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
     </div>
   );
 }
