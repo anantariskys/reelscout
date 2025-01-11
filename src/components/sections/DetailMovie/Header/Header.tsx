@@ -30,6 +30,7 @@ const Header:FC<{detail:MovieDetail}> = ({detail}) => {
             </Link>
           )}
         </div>
+          <small>     {detail.tagline}</small>
         <div className="flex gap-2">
           {detail?.genres.map((genre) => (
             <p
