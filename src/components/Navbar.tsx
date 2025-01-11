@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from './Button'
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
@@ -7,7 +8,7 @@ const Navbar = () => {
     <nav className='container items-center  flex justify-between'>
       <h1 className='text-2xl font-bold'>ReelScout</h1>
       <ul className='flex items-center gap-4'>
-        <li>Beranda</li>
+        <li><Link href='/'>Beranda</Link></li>
         <li>Film</li>
         <li>TV Series</li>
       </ul>
