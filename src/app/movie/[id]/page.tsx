@@ -1,4 +1,5 @@
 "use client";
+import { getMovieDetail } from "@/api/services/movie";
 import Button from "@/components/Button";
 import Header from "@/components/sections/DetailMovie/Header/Header";
 import Summary from "@/components/sections/DetailMovie/Summary/Summary";
@@ -14,23 +15,8 @@ const Detail = () => {
 
   useEffect(() => {
     const fetchDetail = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTc0YjY4ZWM3MjBhYWU3ZjRmODNmYzc4MTExZDUzOCIsIm5iZiI6MTY4OTMzNjg1OS4zNCwic3ViIjoiNjRiMTNjMWIyY2RlOTgwMGFlY2E5ODk1Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.HSpGpteNgP78oaY4oVDqB1QHY2wGHxOyA6b0PJi24Mk",
-            },
-          }
-        );
-
-        console.log(response.data);
-
-        setDetail(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await getMovieDetail(Number(id));
+      setDetail(response);
     };
     fetchDetail();
   }, [id]);
@@ -40,7 +26,7 @@ const Detail = () => {
       {detail ? (
         <>
           {" "}
-          <Header detail={detail} /> <Summary id={detail.id} />{" "}
+          <Header detail={detail} /> <Summary detail={detail} id={detail.id} />{" "}
         </>
       ) : (
         <p>Loading...</p>
