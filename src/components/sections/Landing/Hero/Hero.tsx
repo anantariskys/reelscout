@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import { getPopularMovie } from "@/api/services/movie";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -23,26 +24,13 @@ interface Movie {
 }
 const Hero = () => {
   const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            "https://api.themoviedb.org/3/movie/popular",
-            {
-              headers: {
-                Authorization:
-                  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTc0YjY4ZWM3MjBhYWU3ZjRmODNmYzc4MTExZDUzOCIsIm5iZiI6MTY4OTMzNjg1OS4zNCwic3ViIjoiNjRiMTNjMWIyY2RlOTgwMGFlY2E5ODk1Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.HSpGpteNgP78oaY4oVDqB1QHY2wGHxOyA6b0PJi24Mk",
-              },
-            }
-          );
-          setPopularMovies(response.data.results);
-        } catch (error) {
-          alert(error);
-        }
-      };
-      fetchData();
-  },[])
-
+      const response = await getPopularMovie();
+      setPopularMovies(response.results);
+    };
+    fetchData();
+  }, []);
   return (
     <Swiper
       modules={[Autoplay, Navigation]}
