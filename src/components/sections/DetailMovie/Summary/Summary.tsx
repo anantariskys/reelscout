@@ -1,8 +1,8 @@
-import { Video } from "@/types/global";
+import { MovieDetail, Video } from "@/types/global";
 import axios from "axios";
 import React, { FC, useEffect } from "react";
 
-const Summary: FC<{ id: number }> = ({ id }) => {
+const Summary: FC<{ id: number; detail: MovieDetail }> = ({ id, detail }) => {
   const [video, setVideo] = React.useState<Video>();
 
   useEffect(() => {
@@ -26,14 +26,54 @@ const Summary: FC<{ id: number }> = ({ id }) => {
     fetchVideo();
   });
   return (
-    <section className="container">
+    <section className="container flex gap-4">
       <iframe
-        width="560"
-        height="315"
+        className="w-2/5 aspect-video"
         src={`https://www.youtube.com/embed/${video?.key}`}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       ></iframe>
+      <main className="space-y-2">
+        <div className="">
+          <h4 className="text-2xl font-semibold">Release Date</h4>
+          <p>{detail.release_date}</p>
+        </div>
+        <div className="">
+          <h4 className="text-2xl font-semibold">Runtime</h4>
+          <p>{detail.runtime} minute</p>
+        </div>
+        <div className="">
+          <h4 className="text-2xl font-semibold">Production Company</h4>
+          <div className="flex gap-2 flex-wrap items-center">
+            {detail.production_companies.map((company) => (
+              <p
+                className="text-sm bg-white text-primary  p-2 rounded-lg"
+                key={company.id}
+              >
+                {company.name}
+              </p>
+            ))}
+          </div>
+        </div>
+        <div className="">
+          <h4 className="text-2xl font-semibold">Budget</h4>
+          <p>
+            {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(detail.budget)}
+          </p>
+        </div>
+        <div className="">
+          <h4 className="text-2xl font-semibold">Revenue</h4>
+          <p>
+            {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            }).format(detail.revenue)}
+          </p>
+        </div>
+      </main>
     </section>
   );
 };
