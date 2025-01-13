@@ -1,32 +1,20 @@
 "use client";
 
-import { getPopularMovie } from "@/api/services/movie";
+import { getNowPlayingMovie, getPopularMovie } from "@/api/services/movie";
+import Button from "@/components/Button";
+import { Movie } from "@/types/global";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+
 const Hero = () => {
   const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getPopularMovie();
+      const response = await getNowPlayingMovie();
       setPopularMovies(response.results);
     };
     fetchData();
@@ -49,9 +37,14 @@ const Hero = () => {
             }}
             className="h-screen bg-cover bg-center flex items-center relative justify-start "
           >
-            <div className="relative z-10 container">
+            <div className="relative  z-10 container">
               <h3 className="text-4xl font-semibold">{item.original_title}</h3>
-              <p className="max-w-4xl">{item.overview}</p>
+              <div className="flex items-center gap-2">
+              </div>
+              <p className="max-w-4xl mb-4">{item.overview}</p>
+              <Link href={`/movie/${item.id}`}>
+              <Button variant="tertiary">Watch Now</Button>
+              </Link>
             </div>
             <div className="absolute h-full bottom-0  bg-gradient-to-t from-primary to-transparent w-full"></div>
           </div>
