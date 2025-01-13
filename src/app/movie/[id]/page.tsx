@@ -1,11 +1,9 @@
 "use client";
 import { getMovieDetail } from "@/api/services/movie";
-import Button from "@/components/Button";
 import Header from "@/components/sections/DetailMovie/Header/Header";
 import Summary from "@/components/sections/DetailMovie/Summary/Summary";
 import { MovieDetail } from "@/types/global";
-import axios from "axios";
-import Link from "next/link";
+
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 
