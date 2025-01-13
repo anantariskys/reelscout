@@ -17,6 +17,22 @@ export const getTopRatedMovie = async () => {
         console.log(error);
     }
 }
+export const getUpcomingMovie = async () => {
+    try {
+        const response = await core.get(`movie/upcoming`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const getNowPlayingMovie = async () => {
+    try {
+        const response = await core.get(`movie/now_playing`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const getMovieCategory = async ()=>{
     try {
