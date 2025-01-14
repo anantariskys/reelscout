@@ -2,7 +2,6 @@
 import { getMovieCategory } from "@/api/services/movie";
 import CategoryCard from "@/components/sections/Landing/Category/CategoryCard";
 import SectionLayout from "@/layouts/SectionLayout";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
