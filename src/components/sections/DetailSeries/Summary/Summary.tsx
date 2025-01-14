@@ -1,7 +1,7 @@
-import { MovieDetail, TVSeriesDetail, Video } from "@/types/global";
-import React, { FC, useEffect } from "react";
+import { TVSeriesDetail, Video } from "@/types/global";
+import React, { FC} from "react";
 
-const Summary: FC<{ id: number; detail:TVSeriesDetail }> = ({ id, detail }) => {
+const Summary: FC<{ id: number; detail:TVSeriesDetail }> = ({ detail }) => {
   const [video, setVideo] = React.useState<Video>();
 
   
