@@ -2,7 +2,6 @@
 import { getTopRatedMovie } from "@/api/services/movie";
 import SectionLayout from "@/layouts/SectionLayout";
 import { Movie } from "@/types/global";
-import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
