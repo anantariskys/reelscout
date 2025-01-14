@@ -1,7 +1,7 @@
 "use client";
 import { getTopRatedSeries } from "@/api/services/tv";
 import SectionLayout from "@/layouts/SectionLayout";
-import { Movie, TVShow } from "@/types/global";
+import {  TVShow } from "@/types/global";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
