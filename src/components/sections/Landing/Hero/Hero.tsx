@@ -1,6 +1,6 @@
 "use client";
 
-import { getNowPlayingMovie, getPopularMovie } from "@/api/services/movie";
+import { getNowPlayingMovie } from "@/api/services/movie";
 import Button from "@/components/Button";
 import { Movie } from "@/types/global";
 import Link from "next/link";
