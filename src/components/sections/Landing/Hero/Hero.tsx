@@ -3,7 +3,6 @@
 import { getNowPlayingMovie, getPopularMovie } from "@/api/services/movie";
 import Button from "@/components/Button";
 import { Movie } from "@/types/global";
-import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
