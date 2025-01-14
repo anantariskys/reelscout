@@ -1,5 +1,4 @@
 import { MovieDetail, TVSeriesDetail, Video } from "@/types/global";
-import axios from "axios";
 import React, { FC, useEffect } from "react";
 
 const Summary: FC<{ id: number; detail:TVSeriesDetail }> = ({ id, detail }) => {
