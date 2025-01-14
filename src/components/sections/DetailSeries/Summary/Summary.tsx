@@ -2,7 +2,7 @@ import { TVSeriesDetail, Video } from "@/types/global";
 import React, { FC} from "react";
 
 const Summary: FC<{ id: number; detail:TVSeriesDetail }> = ({ detail }) => {
-  const [video, setVideo] = React.useState<Video>();
+  const [video] = React.useState<Video>();
 
   
   return (
